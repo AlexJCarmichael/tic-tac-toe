@@ -2,62 +2,77 @@
 class BoardState
   attr_accessor :ul, :um, :ur, :ml, :mm, :mr, :ll, :lm, :lr
   def initialize
-    @ul = "1"
-    @um = "2"
-    @ur = "3"
-    @ml = "4"
-    @mm = "5"
-    @mr = "6"
-    @ll = "7"
-    @lm = "8"
-    @lr = "9"
+    @ul = 1
+    @um = 2
+    @ur = 3
+    @ml = 4
+    @mm = 5
+    @mr = 6
+    @ll = 7
+    @lm = 8
+    @lr = 9
+  end
+  def top_row
+    [@ul, @um, @ur]
   end
 
-  def top_row_win
-    if @ul == "X" && @um == "X" && @ur == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+  def middle_row
+    [@ml, @mm, @mr]
   end
-  def middle_row_win
-    if @ml == "X" && @mm == "X" && @mr == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+
+  def bottom_row
+    [@ll, @lm, @lr]
   end
-  def bottom_row_win
-    if @ll == "X" && @lm == "X" && @lr == "X"
-      puts "Tic-tac-toe!"
-    end
+
+  def left_column
+    [@ul, @ml, @lr]
   end
-  def left_column_win
-    if @ul == "X" && @ml == "X" && @ll == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+
+  def middle_column
+    [@um, @mm, @lm]
   end
-  def middle_column_win
-    if @um == "X" && @mm == "X" && @lm == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+
+  def right_column
+    [@ur, @mr, @lr]
   end
-  def right_column_win
-    if @ur == "X" && @mr == "X" && @lr == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
-  end
+
   def diagonal_down_right
-    if @ul == "X" && @mm == "X" && @lr == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+    [@ul, @mm, @lr]
   end
+
   def diagonal_up_right
-    if @ll == "X" && @mm == "X" && @ur == "X"
-      puts "Tic-tac-toe!"
-      return true
-    end
+    [@ll, @mm, @ur]
+  end
+
+  def top_row_win?
+    top_row.all? {|element| element == "X"}
+  end
+
+  def middle_row_win?
+    middle_row.all? {|element| element == "X"}
+  end
+
+  def bottom_row_win?
+    bottom_row.all? {|element| element == "X"}
+  end
+
+  def left_column_win?
+    left_column.all? {|element| element == "X"}
+  end
+
+  def middle_column_win?
+    middle_column.all? {|element| element == "X"}
+  end
+
+  def right_column_win?
+    right_column.all? {|element| element == "X"}
+  end
+
+  def diagonal_down_right?
+    diagonal_down_right.all? {|element| element == "X"}
+  end
+
+  def diagonal_up_right?
+    diagonal_up_right.all? {|element| element == "X"}
   end
 end

@@ -24,58 +24,40 @@ def make_selection(board, display_board)
     selection = gets.chomp
     if selection == "1"
       board.ul = "X"
-      display_board.print_board
-      winner = board.top_row_win
-      winner = board.left_column_win
-      winner = board.diagonal_down_right
     elsif selection == "2"
       board.um = "X"
-      display_board.print_board
-      winner = board.top_row_win
-      winner = board.middle_column_win
     elsif selection == "3"
       board.ur = "X"
-      display_board.print_board
-      winner = board.top_row_win
-      winner = board.right_column_win
-      winner = board.diagonal_up_right
     elsif selection == "4"
       board.ml = "X"
-      display_board.print_board
-      winner = board.middle_row_win
-      winner = board.left_column_win
     elsif selection == "5"
       board.mm = "X"
-      display_board.print_board
-      winner = board.middle_row_win
-      winner = board.middle_column_win
-      winner = board.diagonal_up_right
-      winner = board.diagonal_down_right
     elsif selection == "6"
       board.mr = "X"
-      display_board.print_board
-      winner = board.middle_row_win
-      winner = board.right_column_win
     elsif selection == "7"
       board.ll = "X"
-      display_board.print_board
-      winner = board.bottom_row_win
-      winner = board.left_column_win
-      winner = board.diagonal_up_right
     elsif selection == "8"
       board.lm = "X"
-      display_board.print_board
-      winner = board.bottom_row_win
-      winner = board.middle_column_win
     elsif selection == "9"
       board.lr = "X"
-      display_board.print_board
-      winner = board.bottom_row_win
-      winner = board.right_column_win
-      winner = board.diagonal_down_right
     else
       display_board.print_board
-      exit
+      print "Please make a valid selection of 1-9 "
+    end
+    display_board.print_board
+    winning_checks = [
+      board.top_row_win?,
+      board.middle_row_win?,
+      board.bottom_row_win?,
+      board.right_column_win?,
+      board.middle_column_win?,
+      board.left_column_win?,
+      board.diagonal_down_right?,
+      board.diagonal_up_right?,
+      ]
+    if winning_checks.any?
+      puts "tic-tac-toe!"
+      winner = true
     end
   end
 end
