@@ -1,9 +1,9 @@
 
 class BoardState
   attr_accessor :ul, :um, :ur, :ml, :mm, :mr, :ll, :lm, :lr
-  def initialize
+  def initialize(player_icon, computer_icon)
     @ul = 1
-    @um = 2
+    @um = computer_icon
     @ur = 3
     @ml = 4
     @mm = 5
@@ -11,6 +11,8 @@ class BoardState
     @ll = 7
     @lm = 8
     @lr = 9
+    @player_icon = player_icon
+    @computer_icon = computer_icon
   end
   def top_row
     [@ul, @um, @ur]
@@ -45,34 +47,35 @@ class BoardState
   end
 
   def top_row_win?
-    top_row.all? {|element| element == "X"}
+    top_row.all? {|element| element == @player_icon } ||
+    top_row.all? {|element| element == @computer_icon }
   end
 
   def middle_row_win?
-    middle_row.all? {|element| element == "X"}
+    middle_row.all? {|element| element == @player_icon }
   end
 
   def bottom_row_win?
-    bottom_row.all? {|element| element == "X"}
+    bottom_row.all? {|element| element == @player_icon }
   end
 
   def left_column_win?
-    left_column.all? {|element| element == "X"}
+    left_column.all? {|element| element == @player_icon}
   end
 
   def middle_column_win?
-    middle_column.all? {|element| element == "X"}
+    middle_column.all? {|element| element == @player_icon }
   end
 
   def right_column_win?
-    right_column.all? {|element| element == "X"}
+    right_column.all? {|element| element == @player_icon }
   end
 
   def diagonal_down_right?
-    diagonal_down_right.all? {|element| element == "X"}
+    diagonal_down_right.all? {|element| element == @player_icon }
   end
 
   def diagonal_up_right?
-    diagonal_up_right.all? {|element| element == "X"}
+    diagonal_up_right.all? {|element| element == @player_icon}
   end
 end

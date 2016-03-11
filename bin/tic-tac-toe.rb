@@ -17,29 +17,65 @@ def time_to_duel
   end
 end
 
-def make_selection(board, display_board)
+def check_selection(selector, board, player)
+  if selector.class == Fixnum
+    selector = player.icon
+    return true
+  else
+    puts "Invalid selection, please select again."
+  end
+end
+
+def make_selection(board, display_board, player)
   puts "Please select a space on the board."
   winner = false
   until winner
     selection = gets.chomp
     if selection == "1"
-      board.ul = "X"
+      selector = board.ul
+      if check_selection(selector, board, player)
+        board.ul = player.icon
+      end
     elsif selection == "2"
-      board.um = "X"
+      selector = board.um
+      if check_selection(selector, board, player)
+        board.um = player.icon
+      end
     elsif selection == "3"
-      board.ur = "X"
+      selector = board.ur
+      if check_selection(selector, board, player)
+        board.ur = player.icon
+      end
     elsif selection == "4"
-      board.ml = "X"
+      selector = board.ml
+      if check_selection(selector, board, player)
+        board.ml = player.icon
+      end
     elsif selection == "5"
-      board.mm = "X"
+      selector = board.mm
+      if check_selection(selector, board, player)
+        board.mm = player.icon
+      end
     elsif selection == "6"
-      board.mr = "X"
+      selector = board.mr
+      if check_selection(selector, board, player)
+        board.mr = player.icon
+      end
     elsif selection == "7"
-      board.ll = "X"
+      selector = board.ll
+      if check_selection(selector, board, player)
+        board.ll = player.icon
+      end
     elsif selection == "8"
-      board.lm = "X"
+      selector = board.lm
+      if check_selection(selector, board, player)
+        board.lm = player.icon
+      end
     elsif selection == "9"
-      board.lr = "X"
+      selector = board.lr
+      if check_selection(selector, board, player)
+        board.lr = player.icon
+      end
     else
       display_board.print_board
       print "Please make a valid selection of 1-9 "
@@ -76,12 +112,17 @@ end
 
 class TicTacToe
   time_to_duel
-  board = BoardState.new
   print "What name do you wish to play as? "
   user = gets.chomp
   player = Player.new(user)
+  print "What icon would #{player.name} like to use? X is the default. "
+  player.icon = gets.chomp
   puts "#{player.name} has entered the fray!"
+  computer = "Reginald"
+  computer_icon = "O"
+  puts "Your oponent today is the vile #{computer}!"
+  board = BoardState.new(player.icon, computer_icon)
   display_board = DisplayBoard.new(board)
   display_board.print_board
-  make_selection(board, display_board)
+  make_selection(board, display_board, player)
 end
