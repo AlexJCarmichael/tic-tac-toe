@@ -27,7 +27,7 @@ class BoardState
   end
 
   def left_column
-    [@ul, @ml, @lr]
+    [@ul, @ml, @ll]
   end
 
   def middle_column
