@@ -192,17 +192,19 @@ def game_logic(board, display_board, player, computer)
   end
 end
 
-# def play_again
-#   puts "Do you want to play again? (yes) or (no)"
-#   again = gets.chomp.upcase
-#   if again == "YES"
-#   elsif again == "NO"
-#     puts "Good-bye"
-#     exit
-#   else
-#     puts "Tim Allen Noise."
-#   end
-# end
+def play_again
+  puts "Do you want to play again? (yes) or (no)"
+  again = gets.chomp.upcase
+  if again == "YES"
+    new = TicTacToe
+  elsif again == "NO"
+    puts "Good-bye"
+    exit
+  else
+    puts "Tim Allen Noise."
+  end
+end
+
 
 class TicTacToe
   time_to_duel
@@ -211,12 +213,20 @@ class TicTacToe
   player = Player.new(user)
   computer = Computer.new(computer)
   print "What icon would #{player.name} like to use? X is the default. "
-  player.icon = gets.chomp
+  player.icon = gets.chomp.upcase
+  if player.icon == ""
+    player.icon = "X"
+  end
   puts "#{player.name} has entered the fray!"
   computer.name = "Reginald"
-  computer.icon = "O"
+  if player.icon == "O"
+    computer.icon = "X"
+  else
+    computer.icon = "O"
+  end
   puts "Your oponent today is the vile #{computer.name}!"
   board = BoardState.new(player.icon, computer.icon)
   display_board = DisplayBoard.new(board)
   game_logic(board, display_board, player, computer)
+  play_again
 end
