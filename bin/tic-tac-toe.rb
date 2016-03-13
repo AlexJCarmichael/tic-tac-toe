@@ -5,23 +5,16 @@ require_relative '../lib/computer.rb'
 
 def time_to_duel
   puts "Let's play tic-tac-toe."
-  puts "Please select (play) or (quit)."
-  play = gets.chomp.upcase
-  if play == "PLAY"
-    puts "Let us begin!"
-  elsif play == "QUIT"
-    puts "So long, farewell, auf wiedersehen, good-bye."
-    exit
-  else
-    puts "You did not select (play) or (quit). Please select one."
-    time_to_duel
-  end
+  puts "1. Single player versus a computer player."
+  puts "2. A player vs player, PvP as it were, expierience."
+  puts "3. Or you could exit the game."
+  puts "Please select 1, 2, or 3."
 end
 
-def check_selection(selector, board, player, computer, is_computer)
+def check_selection(selector, board, player, player_two, is_computer)
   if selector.class == Fixnum
     if is_computer
-      selector = computer.icon
+      selector = player_two.icon
       return true
     else
       selector = player.icon
@@ -32,14 +25,50 @@ def check_selection(selector, board, player, computer, is_computer)
   end
 end
 
-def computer_logic(computer, board, display_board, player)
-  puts "#{computer.name}'s turn!"
-  make_selection(board, display_board, player, computer, true)
-  display_board.print_board
-  puts "#{computer.name} has moved."
+def player_first(player)
+  print "What name do you wish to play as? "
+  user = gets.chomp
+  player.name = user
+  print "What icon would #{player.name} like to use? X is the default. "
+  player.icon = gets.chomp.upcase
+  if player.icon == ""
+    player.icon = "X"
+  end
+  puts "#{player.name} has entered the fray!"
 end
 
-def make_selection(board, display_board, player, computer, is_computer = false)
+def player_second(player)
+  print "What name do you wish to play as? "
+  user = gets.chomp
+  player.name = user
+  print "What icon would #{player.name} like to use? O is the default. "
+  player.icon = gets.chomp.upcase
+  if player.icon == ""
+    player.icon = "O"
+  end
+  puts "#{player.name} has entered the fray!"
+end
+
+
+def computer_oponent(player_two, player)
+  player_two.name = "Reginald"
+  if player.icon == "O"
+    player_two.icon = "X"
+  else
+    player_two.icon = "O"
+  end
+  puts "Your oponent today is the vile #{player_two.name}!"
+  puts "Your oponent's icon will be #{player_two.icon}"
+end
+
+def computer_logic(player_two, board, display_board, player)
+  puts "#{player_two.name}'s turn!"
+  make_selection(board, display_board, player, player_two, true)
+  display_board.print_board
+  puts "#{player_two.name} has moved."
+end
+
+def make_selection(board, display_board, player, player_two, is_computer = false)
   valid_selection = false
   until valid_selection
     if is_computer
@@ -50,9 +79,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
     end
     if selection == 1
       selector = board.ul
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.ul = computer.icon
+          board.ul = player_two.icon
         else
           board.ul = player.icon
         end
@@ -60,9 +89,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 2
       selector = board.um
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.um = computer.icon
+          board.um = player_two.icon
         else
           board.um = player.icon
         end
@@ -70,9 +99,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 3
       selector = board.ur
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.ur = computer.icon
+          board.ur = player_two.icon
         else
           board.ur = player.icon
         end
@@ -80,9 +109,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 4
       selector = board.ml
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.ml = computer.icon
+          board.ml = player_two.icon
         else
           board.ml = player.icon
         end
@@ -90,9 +119,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 5
       selector = board.mm
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.mm = computer.icon
+          board.mm = player_two.icon
         else
           board.mm = player.icon
         end
@@ -100,9 +129,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 6
       selector = board.mr
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.mr = computer.icon
+          board.mr = player_two.icon
         else
           board.mr = player.icon
         end
@@ -110,9 +139,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 7
       selector = board.ll
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.ll = computer.icon
+          board.ll = player_two.icon
         else
           board.ll = player.icon
         end
@@ -120,9 +149,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 8
       selector = board.lm
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.lm = computer.icon
+          board.lm = player_two.icon
         else
           board.lm = player.icon
         end
@@ -130,9 +159,9 @@ def make_selection(board, display_board, player, computer, is_computer = false)
       end
     elsif selection == 9
       selector = board.lr
-      if check_selection(selector, board, player, computer, is_computer)
+      if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
-          board.lr = computer.icon
+          board.lr = player_two.icon
         else
           board.lr = player.icon
         end
@@ -162,12 +191,12 @@ def winning_checks(board)
   end
 end
 
-def game_logic(board, display_board, player, computer)
+def game_logic(board, display_board, player, player_two, game_type)
   puts "Please select a space on the board."
   winner = false
   until winner
     display_board.print_board
-    make_selection(board, display_board, player, computer)
+    make_selection(board, display_board, player, player_two)
     winner = winning_checks(board)
     if winner
       puts "#{player.name} has a tic-tac-toe!"
@@ -178,10 +207,14 @@ def game_logic(board, display_board, player, computer)
       puts "It's a tie?"
       break
     end
-    computer_logic(computer, board, display_board, player)
+    if game_type == 1
+      computer_logic(player_two, board, display_board, player)
+    else
+      make_selection(board, display_board, player, player_two)
+    end
     winner = winning_checks(board)
     if winner
-       puts "#{computer.name} has a tic-tac-toe!"
+       puts "#{player_two.name} has a tic-tac-toe!"
        display_board.print_board
        break
      end
@@ -207,26 +240,24 @@ end
 def start
   loop do
     time_to_duel
-    print "What name do you wish to play as? "
-    user = gets.chomp
-    player = Player.new(user)
-    computer = Computer.new(computer)
-    print "What icon would #{player.name} like to use? X is the default. "
-    player.icon = gets.chomp.upcase
-    if player.icon == ""
-      player.icon = "X"
+    game_type = gets.chomp
+    case
+    when game_type == "1"
+      player = Player.new("user")
+      player_first(player)
+      player_two = Computer.new("Reginald")
+      computer_oponent(player_two, player)
+    when game_type == "2"
+      player = Player.new("user")
+      player_first(player)
+      player_two = Player.new("user2")
+      puts "*********This is data for player two******"
+      player_second(player_two)
     end
     puts "#{player.name} has entered the fray!"
-    computer.name = "Reginald"
-    if player.icon == "O"
-      computer.icon = "X"
-    else
-      computer.icon = "O"
-    end
-    puts "Your oponent today is the vile #{computer.name}!"
-    board = BoardState.new(player.icon, computer.icon)
+    board = BoardState.new(player.icon, player_two.icon)
     display_board = DisplayBoard.new(board)
-    game_logic(board, display_board, player, computer)
+    game_logic(board, display_board, player, player_two, game_type)
     play_again
   end
 end
