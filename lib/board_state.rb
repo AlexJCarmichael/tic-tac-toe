@@ -91,6 +91,6 @@ class BoardState
   end
 
   def is_draw?
-    whole_board.all? {|element| element != Fixnum}
+    whole_board.all? {|element| element.class == String}
   end
 end

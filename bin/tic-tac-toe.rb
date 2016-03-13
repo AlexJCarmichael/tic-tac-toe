@@ -162,13 +162,6 @@ def winning_checks(board)
   end
 end
 
-def is_draw?(board)
-   if board.is_draw?
-     puts "It's a tie?"
-     return true
-   end
-end
-
 def game_logic(board, display_board, player, computer)
   puts "Please select a space on the board."
   winner = false
@@ -178,16 +171,24 @@ def game_logic(board, display_board, player, computer)
     winner = winning_checks(board)
     if winner
       puts "#{player.name} has a tic-tac-toe!"
+      display_board.print_board
       break
     end
-    #winner = is_draw?(board)
+    if board.is_draw?
+      puts "It's a tie?"
+      break
+    end
     computer_logic(computer, board, display_board, player)
     winner = winning_checks(board)
     if winner
        puts "#{computer.name} has a tic-tac-toe!"
+       display_board.print_board
        break
      end
-     #winner = is_draw?(board)
+     if board.is_draw?
+       puts "It's a tie?"
+       break
+     end
   end
 end
 
