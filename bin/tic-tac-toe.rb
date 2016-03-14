@@ -16,6 +16,9 @@ def check_selection(selector, board, player, player_two, is_computer)
     if is_computer
       selector = player_two.icon
       return true
+    elsif player_two.second_player
+      selector = player_two.icon
+      return true
     else
       selector = player.icon
       return true
@@ -73,6 +76,9 @@ def make_selection(board, display_board, player, player_two, is_computer = false
   until valid_selection
     if is_computer
       selection = rand(1..9)
+    elsif player_two.second_player
+      print "#{player_two.name} where do you wish to place your mark? >"
+      selection = gets.chomp.to_i
     else
       print "#{player.name} where do you wish to place your mark? > "
       selection = gets.chomp.to_i
@@ -81,6 +87,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       selector = board.ul
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
+          board.ul = player_two.icon
+        elsif player_two.second_player
           board.ul = player_two.icon
         else
           board.ul = player.icon
@@ -92,6 +100,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
           board.um = player_two.icon
+        elsif player_two.second_player
+          board.um = player_two.icon
         else
           board.um = player.icon
         end
@@ -101,6 +111,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       selector = board.ur
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
+          board.ur = player_two.icon
+        elsif player_two.second_player
           board.ur = player_two.icon
         else
           board.ur = player.icon
@@ -112,6 +124,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
           board.ml = player_two.icon
+        elsif player_two.second_player
+          board.ml = player_two.icon
         else
           board.ml = player.icon
         end
@@ -121,6 +135,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       selector = board.mm
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
+          board.mm = player_two.icon
+        elsif player_two.second_player
           board.mm = player_two.icon
         else
           board.mm = player.icon
@@ -132,6 +148,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
           board.mr = player_two.icon
+        elsif player_two.second_player
+          board.mr = player_two.icon
         else
           board.mr = player.icon
         end
@@ -141,6 +159,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       selector = board.ll
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
+          board.ll = player_two.icon
+        elsif player_two.second_player
           board.ll = player_two.icon
         else
           board.ll = player.icon
@@ -152,6 +172,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
           board.lm = player_two.icon
+        elsif player_two.second_player
+          board.lm = player_two.icon
         else
           board.lm = player.icon
         end
@@ -161,6 +183,8 @@ def make_selection(board, display_board, player, player_two, is_computer = false
       selector = board.lr
       if check_selection(selector, board, player, player_two, is_computer)
         if is_computer
+          board.lr = player_two.icon
+        elsif player_two.second_player
           board.lr = player_two.icon
         else
           board.lr = player.icon
@@ -195,6 +219,7 @@ def game_logic(board, display_board, player, player_two, game_type)
   puts "Please select a space on the board."
   winner = false
   until winner
+    player_two.second_player = false
     display_board.print_board
     make_selection(board, display_board, player, player_two)
     winner = winning_checks(board)
@@ -207,9 +232,11 @@ def game_logic(board, display_board, player, player_two, game_type)
       puts "It's a tie?"
       break
     end
-    if game_type == 1
+    display_board.print_board
+    if game_type == "1"
       computer_logic(player_two, board, display_board, player)
-    else
+    elsif game_type == "2"
+      player_two.second_player = true
       make_selection(board, display_board, player, player_two)
     end
     winner = winning_checks(board)
@@ -254,7 +281,6 @@ def start
       puts "*********This is data for player two******"
       player_second(player_two)
     end
-    puts "#{player.name} has entered the fray!"
     board = BoardState.new(player.icon, player_two.icon)
     display_board = DisplayBoard.new(board)
     game_logic(board, display_board, player, player_two, game_type)
